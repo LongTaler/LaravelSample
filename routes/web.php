@@ -3,6 +3,7 @@
 use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BooksController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +20,7 @@ Route::post('/books', [BooksController::class, 'store']);
 Route::post('/booksedit/{books}', [BooksController::class, 'edit']);
 Route::post('books/update', [BooksController::class, 'update']);
 Route::delete('/book/{book}',[BooksController::class, 'destroy']);
-
+Route::get('/phpinfo', function () {
+    phpinfo();});
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\BooksController::class, 'index'])->name('home');
