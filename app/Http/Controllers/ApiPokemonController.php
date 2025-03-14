@@ -68,31 +68,29 @@ class ApiPokemonController extends Controller
      */
     public function destroy()
     {
-        try{
-            // 今日の日付を取得（例: 2025-03-12）
-            $today = now()->toDateString();
-        
-            // 今日登録された最新のポケモンデータを取得
-            $latestPokemon = Pokemon::whereDate('created_at', $today)
-                                    ->latest('created_at')
-                                    ->first();
-        
-            if (!$latestPokemon) {
-            \Log::warning('今日登録されたポケモンデータが見つかりませんでした。');
-            return false; // 失敗
-            }
-            // 削除
-            $latestPokemon->delete();
-        
-
-            \Log::info('最新のポケモンデータを削除しました');
-            return true;
-        } catch (\Exception $e) {
+        // 今日の日付を取得（例: 2025-03-12）
+        $today = now()->toDateString();
+    
+        // 今日登録された最新のポケモンデータを取得
+        $latestPokemon = Pokemon::whereDate('created_at', $today)
+                                ->latest('created_at')
+                                ->first();
+    
+        if (!$latestPokemon) {
             return response()->json([
                 'status' => false,
-                'message' => '予期しないエラーが発生しました。',
-                'error' => $e->getMessage()
-            ], 500);
+                'message' => '変更'
+            ], 404);
         }
+    
+        // 削除
+        $latestPokemon->delete();
+    
+        return response()->json([
+            'status' => true,
+            'message' => '最新のポケモンデータを削除しました。',
+            'deleted_pokemon' => $latestPokemon
+        ], 200);
     }
+    
 }
