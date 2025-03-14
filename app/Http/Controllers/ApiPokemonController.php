@@ -60,7 +60,7 @@ class ApiPokemonController extends Controller
      */
     public function update(Request $request, Pokemon $pokemon)
     {
-        //
+        return("conflict");//
     }
 
     /**
