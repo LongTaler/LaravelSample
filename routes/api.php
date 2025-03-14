@@ -19,6 +19,6 @@ use App\Http\Controllers\ApiPokemonController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/api', 'app\Http\Controllers\api\ApiController@test');
+
 Route::apiResource('products', ApiProductController::class);
 Route::apiResource('pokemons', ApiPokemonController::class);

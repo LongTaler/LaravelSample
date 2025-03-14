@@ -6,7 +6,10 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-
+use App\Events\BatchFinished; 
+use App\Listeners\LogBatchFinished; 
+use App\Events\BatchStarted; 
+use App\Listeners\LogBatchStarted; 
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -15,11 +18,13 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        BatchStarted::class => [
+            LogBatchStarted::class,
+        ],
+        BatchFinished::class => [
+            LogBatchFinished::class,
         ],
     ];
-
     /**
      * Register any events for your application.
      */
